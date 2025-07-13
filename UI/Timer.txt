@@ -18,11 +18,6 @@ Log:
  - v1.0 Initial release
 
 */
-
-//var utils=import Sorgin/Utils
-//var stringExt=import Sorgin/Ext/String
-//var storageExt=import Sorgin/Ext/Storage
-
 var coordsX
 var coordsY
 var coords2Y
