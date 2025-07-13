@@ -74,7 +74,7 @@ func Cooldowns(x,y,w,h)
  var cdc
  var t
  for i:cds
-  t=igc(i)
+  t=item.GetCooldown(i)
   ?t>0
    cdc=#565656
    cd=time.FormatDigital(t)
