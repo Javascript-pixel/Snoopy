@@ -1,7 +1,7 @@
 /*
 Title:   Timer
 Version: 1.0
-Authors: Mario300893
+Authors: Js
 Combined with the mobile version by: Quler82
 
 Description:
@@ -37,7 +37,7 @@ var id			="sorgin.3.65."+loc.id+"."+loc.stars
 var records_fst =GetArray(id+".fst",[0,[],[]])
 var records_sec	=GetArray(id+".sec",[0,[],[]])
 var records_lst	=GetArray(id+".lst",[0,[],[]])
-var config		=GetArray("sorgin.Timer.config",ï¼»0,0,[true,true,true]ï¼½)	// [format,table,[toggles]]
+var config		=GetArray("sorgin.Timer.config",［0,0,[true,true,true]］)	// [format,table,[toggles]]
 
 
 // ui
@@ -139,7 +139,7 @@ func OnNewLoop()
 
 func Calculate()
  lastTotaltime=totaltime
- ?screen.i!lastSection// calcular a cada secciÃ³n
+ ?screen.i!lastSection// calcular a cada sección
   lastSection=screen.i
   AddSection(1)
  ?foe=boss & foe.id!lastBoss & foe.distance<30// calcular a cada boss
@@ -174,7 +174,7 @@ func ResetData()
 
 func UpdateCache()
  var t=config[1]
- var l=âˆž
+ var l=∞
  ?loops>0
   l=loops
  cache_top=l+" avg."+Format(loc.averageTime)+" best."+Format(loc.bestTime)
@@ -223,7 +223,7 @@ func UpdateCache()
  text=text+"     "
  ?config[2][2]
   coordsX--
-  text=text+"[color=#red]â™¥[/color]"
+  text=text+"[color=#red]♥[/color]"
 
  for v:columns
   ?v.Count()>fCount
@@ -250,7 +250,7 @@ func UpdateCache()
    text=text+"\n"+string.Join("",line)
   // falta que si es modo seguro muestre vidas perdidas
  
- text=text+Repeat("â€”",columns.Count()*formatW+extra)+"\n"
+ text=text+Repeat("—",columns.Count()*formatW+extra)+"\n"
  ?config[2][2]
   text=text+Pad(Format(records_sec[0]),formatW," ")
  ?config[2][1]
@@ -291,7 +291,7 @@ func CreatePanel()
  timeBtn.h		=1
  timeBtn.anchor=top_left
  timeBtn.dock	=top_left
- timeBtn.text	=" â™¦ "
+ timeBtn.text	=" ♦ "
  timeBtn.SetPressed(TogglePanel)
 
  //	table data
@@ -311,10 +311,10 @@ func CreatePanel()
  t.y=4
  panel.Add(t)
 
- panel.Add(AddButton(9,2,3,1,0," â—€ ",OnClickFormat1))
- panel.Add(AddButton(20,2,3,1,0," â–¶ ",OnClickFormat2))
- panel.Add(AddButton(9,3,3,1,0," â—€ ",OnClickTable1))
- panel.Add(AddButton(20,3,3,1,0," â–¶ ",OnClickTable2))
+ panel.Add(AddButton(9,2,3,1,0," ◀ ",OnClickFormat1))
+ panel.Add(AddButton(20,2,3,1,0," ▶ ",OnClickFormat2))
+ panel.Add(AddButton(9,3,3,1,0," ◀ ",OnClickTable1))
+ panel.Add(AddButton(20,3,3,1,0," ▶ ",OnClickTable2))
  panel.Add(AddButton(15,5,7,3,-1,"Close",TogglePanel))
 
  toggleOpts=[]
@@ -397,7 +397,7 @@ func isLevel()
  return !loc.isQuest
 
 
-// se supone es mas rÃ¡pido que usar time.FormatDigital(totaltime)
+// se supone es mas rápido que usar time.FormatDigital(totaltime)
 func parseFrames(frames,padM)
  return parseTime(frames/30,padM)
 
