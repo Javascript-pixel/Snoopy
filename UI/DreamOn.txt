@@ -1,0 +1,118 @@
+/*
+a few things that i like to see in my gameplay
+created by Js
+*/
+
+//colors
+var c=＂#A9A9A9＂
+var APC=＂#A9A9A9＂
+
+//difficult colors
+?foe.level<=5&foe.level>0
+ APC=＂#02BDDE＂
+?foe.level<=10&foe.level>5
+ APC=＂#B5B500＂
+?foe.level<=15&foe.level>10
+ APC=＂#326331＂
+?loc.stars<=10&loc.stars>5
+ c=＂#02BDDE＂
+?loc.stars<=15&loc.stars>10
+ c=＂#B5B500＂
+?loc.stars<=20&loc.stars>15
+ c=＂#326331＂
+
+//global variables
+var n=  0
+var t=  0
+var y=  0
+var fps=0
+var dps=［］
+var cds=［]
+var oldhp=foe.hp+foe.armor
+var old_t= item.GetTreasureCount()
+var enduse = 0
+
+//DPS tracker
+?foe.hp+foe.armor<oldhp
+  dps.Add((foe.hp + foe.armor)-oldhp)
+:
+  dps.Add(0)
+oldhp=foe.hp+foe.armor
+?dps.Count()>30
+  dps.RemoveAt(0)
+?!loc.begin
+  for value : dps
+    n=n-value
+  >`0,6,dps: @n@
+n=0
+
+//FPS tracker (limited to 30)
+>`11,6,fps:@fps@
+?time.second>t
+  fps=y
+  y=1
+:
+  y++
+t=time.second
+
+//Post treasure tracker 
+?old_t ! item.GetTreasureCount()
+  enduse++
+?loc.loop
+  old_t = item.GetTreasureCount()
+  enduse = 0
+
+//Weapon cooldown 
+func Cooldowns(x,y,w,h)
+ ?cds.Count()=0
+  for i:［＂mind＂,＂dash＂,＂bash＂,＂quarterstaff＂,
+  ^＂heavy_hammer＂,＂bardiche＂,＂blade＂,＂mask＂,
+  ^＂skeleton_arm＂］
+   ?item.GetCount(i) 
+    cds.Add(i)
+ var cd
+ var cdc
+ var t
+ for i:cds
+  t=igc(i)
+  ?t>0
+   cdc=#565656
+   cd=time.FormatDigital(t)
+  :
+   cdc=#A9A9A9
+   cd=string.ToUpper(string.Sub(i,0,4))
+  >`@x@,@y@,@cdc@,@cd@
+  x=x+w
+  y=y+h
+
+
+//PRINT O' MANYA
+func PrintMyAscii()
+ var mc=＂#A9A9A9＂
+ >`0,0,@APC@,Boss: @foe=boss@
+ >`0,1,@mc@,buffs: @foe.buffs.string@
+ >`0,2,@mc@,debuffs: @foe.debuffs.string@
+ >`0,3,@mc@,hp @hp@ armor @armor@ 
+ ^@buffs.GetCount(＂smite＂)@♦
+ >`0,4,@mc@,buffs: @buffs.string@
+ >`0,5,@mc@,debuffs: @debuffs.string@
+ >`0,8,@mc@,ai.enabled: @ai.enabled@
+ >`0,9,@mc@,ai.idle: @ai.idle@
+ >`0,10,@mc@,ai.walking: @ai.walking@
+ >`0,11,@mc@,ai.paused: @ai.paused@
+ >`0,12,@mc@,Elite: @encounter.isElite@ 
+ ^@encounter.eliteMod@
+ >`0,13,@mc@,potion: @item.potion!empty@
+ >`0,16,LB time: @totaltime@ @enduse@ 
+ >`0,22,@c@,loc: @loc.id@ *@loc.stars@* 
+ ^GP @loc.gp@
+ >`0,23,@mc@,pos: x @pos.x@ y @pos.y@ z @pos.z@
+ ^ scrn: @screen.i@
+ >`0,24,@APC@,☆@foe.level@☆ @foe.id@ 
+ ^d: @fd@ c: @foe.count@ dmg: 
+ ^@foe.damage@ hp: @foe.hp@ z: @foe.z@
+ >`45,25,@mc@,@item.GetCooldown(＂staff_fire＂)@
+?!loc.isQuest & loc.stars > 0
+^& loc ! ＂shop＂
+ PrintMyAscii()
+ Cooldowns(0,screen.h-2,5,0)
