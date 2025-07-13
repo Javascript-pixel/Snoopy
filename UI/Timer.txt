@@ -223,7 +223,7 @@ func UpdateCache()
  text=text+"     "
  ?config[2][2]
   coordsX--
-  text=text+"[color=#red]♥[/color]"
+  text=text+"[color=#blue]Ω[/color]"
 
  for v:columns
   ?v.Count()>fCount
@@ -291,7 +291,7 @@ func CreatePanel()
  timeBtn.h		=1
  timeBtn.anchor=top_left
  timeBtn.dock	=top_left
- timeBtn.text	=" ♦ "
+ timeBtn.text	=" • "
  timeBtn.SetPressed(TogglePanel)
 
  //	table data
@@ -311,10 +311,10 @@ func CreatePanel()
  t.y=4
  panel.Add(t)
 
- panel.Add(AddButton(9,2,3,1,0," ◀ ",OnClickFormat1))
- panel.Add(AddButton(20,2,3,1,0," ▶ ",OnClickFormat2))
- panel.Add(AddButton(9,3,3,1,0," ◀ ",OnClickTable1))
- panel.Add(AddButton(20,3,3,1,0," ▶ ",OnClickTable2))
+ panel.Add(AddButton(9,2,3,1,0," < ",OnClickFormat1))
+ panel.Add(AddButton(20,2,3,1,0," > ",OnClickFormat2))
+ panel.Add(AddButton(9,3,3,1,0," < ",OnClickTable1))
+ panel.Add(AddButton(20,3,3,1,0," > ",OnClickTable2))
  panel.Add(AddButton(15,5,7,3,-1,"Close",TogglePanel))
 
  toggleOpts=[]
