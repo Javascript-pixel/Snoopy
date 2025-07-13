@@ -1,21 +1,11 @@
-var MaxListLength = 5
-
-var CheckingDamage  = true
-var CheckingHealing = true
-var CheckingDebuffs = true
-var CheckingFoeBuffs= true
-
-
-
 /*///////////////////////////////////
-FoeStateTracker v4.1
+FoeStateTracker v5.0
 
 This is a simple script that will list the last 5 previous enemy states and times.
-You can adjust the number of states that are retained with the variable MaxListLength.
+You can adjust the number of states that are retained with the settings button.
 
 ```````````````````
 import UI/FoeStateTracker
-.MaxListLength = 10
 ````````````````````
 
 This version will also track other events and display them with reference to foe state and time.
@@ -28,6 +18,11 @@ Currently it tracks:
  - Incoherent Toast
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 
+var MaxListLength = storage.Get("MaxListLength",5)
+var CheckingDamage  = storage.Get("CheckingDamage",true)
+var CheckingHealing = storage.Get("CheckingHealing",true)
+var CheckingDebuffs = storage.Get("CheckingDebuffs",true)
+var CheckingFoeBuffs= storage.Get("CheckingFoeBuffs",true)
 var StateList = []
 var StateListText
 var TimeListText
@@ -46,22 +41,34 @@ var DragCont = import UI/DragController
 var ToggleDragging = false
 var XSet = storage.Get("X",0)
 var YSet = storage.Get("Y",7)
+var SettingsButton
+var SettingsToggle = false
+var SettingsPanel
+var SettingsText
+var CloseSettings
+var ListIncreaseButton
+var ListDecreaseButton
+var DamageToggleButton
+var HealingToggleButton
+var DebuffsToggleButton
+var FoeBuffsToggleButton
 var StyleInvisible = ui.AddStyle("
 ^###
 ^###
 ^###")
 
-
-func Create_UI_Element(UI,X,Y,W)
-  UI.x = X
-  UI.y = Y
-  UI.w = W
-  UI.dock = top_left
-  UI.anchor = top_left
-  return UI
+func Create_UI_Element(_UI,X,Y,W)
+  _UI.x = X
+  _UI.y = Y
+  _UI.w = W
+  _UI.dock = top_left
+  _UI.anchor = top_left
+  return _UI
 
 var z
 ?totaltime = 1 | init
+  ?totaltime = 1
+    SettingsToggle = false
   init = false
   EventRecorder.Clear()
   StateList.Clear()
@@ -90,18 +97,137 @@ var z
   DragButton.style = StyleInvisible
   DragButton.SetDown(DragToggle)
 
+  SettingsButton = Create_UI_Element( ui.AddButton() ,7,0,3)
+  SettingsButton.h = 1
+  SettingsButton.text = "≡"
+  SettingsButton.style = StyleInvisible
+  SettingsButton.SetDown(OpenSettings)
+
   StateListBox.Add(Label)
   StateListBox.Add(StateListText)
   StateListBox.Add(TimeListText)
   StateListBox.Add(EventDisplayText)
   StateListBox.Add(DragButton)
+  StateListBox.Add(SettingsButton)
 
 func ClearStorage()
   storage.Delete("X")
   storage.Delete("Y")
+  storage.Delete("MaxListLength")
+  storage.Delete("CheckingDamage")
+  storage.Delete("CheckingHealing")
+  storage.Delete("CheckingDebuffs")
+  storage.Delete("CheckingFoeBuffs")
 
 func DragToggle()
   ToggleDragging = !ToggleDragging
+
+func ListDecrease()
+  ?MaxListLength > 1
+    MaxListLength--
+    storage.Set("MaxListLength", MaxListLength)
+func ListIncrease()
+  MaxListLength++
+  storage.Set("MaxListLength", MaxListLength)
+func CheckingDamageToggle()
+  CheckingDamage = !CheckingDamage
+  storage.Set("CheckingDamage", CheckingDamage)
+  SettingsText.text = GetSettingsText()
+func CheckingHealingToggle()
+  CheckingHealing = !CheckingHealing
+  storage.Set("CheckingHealing", CheckingHealing)
+  SettingsText.text = GetSettingsText()
+func CheckingDebuffsToggle()
+  CheckingDebuffs = !CheckingDebuffs
+  storage.Set("CheckingDebuffs", CheckingDebuffs)
+  SettingsText.text = GetSettingsText()
+func CheckingFoeBuffsToggle()
+  CheckingFoeBuffs = !CheckingFoeBuffs
+  storage.Set("CheckingFoeBuffs", CheckingFoeBuffs)
+  SettingsText.text = GetSettingsText()
+
+func OpenSettings()
+  SettingsToggle = !SettingsToggle
+  ?SettingsToggle
+    SettingsPanel = ui.AddPanel()
+    SettingsPanel.w = 23
+    SettingsPanel.h = 9
+    SettingsPanel.style = 1
+
+    SettingsText = Create_UI_Element( ui.AddText() ,0,0,23)
+    SettingsText.text = GetSettingsText()
+
+    ListDecreaseButton = Create_UI_Element( ui.AddButton() ,14,1,3)
+    ListDecreaseButton.h = 1
+    ListDecreaseButton.text = "-"
+    ListDecreaseButton.style = StyleInvisible
+    ListDecreaseButton.SetDown(ListDecrease)
+
+    ListIncreaseButton = Create_UI_Element( ui.AddButton() ,18,1,3)
+    ListIncreaseButton.h = 1
+    ListIncreaseButton.text = "+"
+    ListIncreaseButton.style = StyleInvisible
+    ListIncreaseButton.SetDown(ListIncrease)
+
+    DamageToggleButton = Create_UI_Element( ui.AddButton() ,17,4,5)
+    DamageToggleButton.h = 1
+    DamageToggleButton.text = ""
+    DamageToggleButton.style = StyleInvisible
+    DamageToggleButton.SetDown(CheckingDamageToggle)
+
+    DebuffsToggleButton = Create_UI_Element( ui.AddButton() ,17,5,5)
+    DebuffsToggleButton.h = 1
+    DebuffsToggleButton.text = ""
+    DebuffsToggleButton.style = StyleInvisible
+    DebuffsToggleButton.SetDown(CheckingDebuffsToggle)
+
+    FoeBuffsToggleButton = Create_UI_Element( ui.AddButton() ,17,6,5)
+    FoeBuffsToggleButton.h = 1
+    FoeBuffsToggleButton.text = ""
+    FoeBuffsToggleButton.style = StyleInvisible
+    FoeBuffsToggleButton.SetDown(CheckingFoeBuffsToggle)
+
+    HealingToggleButton = Create_UI_Element( ui.AddButton() ,17,7,5)
+    HealingToggleButton.h = 1
+    HealingToggleButton.text = ""
+    HealingToggleButton.style = StyleInvisible
+    HealingToggleButton.SetDown(CheckingHealingToggle)
+ 
+    CloseSettings = Create_UI_Element( ui.AddButton() ,21,0,3)
+    CloseSettings.h = 1
+    CloseSettings.text = "[x]"
+    CloseSettings.style = StyleInvisible
+    CloseSettings.SetDown(OpenSettings)
+
+    SettingsPanel.Add(CloseSettings)
+    SettingsPanel.Add(SettingsText)
+    SettingsPanel.Add(ListIncreaseButton)
+    SettingsPanel.Add(ListDecreaseButton)
+    SettingsPanel.Add(DamageToggleButton)
+    SettingsPanel.Add(HealingToggleButton)
+    SettingsPanel.Add(DebuffsToggleButton)
+    SettingsPanel.Add(FoeBuffsToggleButton)
+  :
+    SettingsPanel.Recycle()
+    SettingsPanel = null
+
+func OnOffText(Bool)
+  ?Bool
+    return "[color=#108010]ON[/color]"
+  return "[color=#A01010]OFF[/color]"
+
+func GetSettingsText()
+  var ReturnText = ascii
+#######Settings
+#List Length: [#] [#]
+#[color=#606060]─────────────────────[/color]
+#####Event Logger:
+#Damage received [{0}]
+#Player Debuffed [{1}]
+#Foe Buffed      [{2}]
+#Player Healed   [{3}]
+asciiend
+  return string.format(ReturnText, OnOffText(CheckingDamage),OnOffText(CheckingDebuffs),OnOffText(CheckingFoeBuffs),OnOffText(CheckingHealing))
 
 ?ToggleDragging
   XSet = math.Clamp(input.x, 0, screen.w)
