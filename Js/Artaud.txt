@@ -1,0 +1,200 @@
+//global variables (in development)
+//can activate?
+var igc 
+igc=item.GetCooldown
+var ica
+ica=item.CanActivate
+
+//foes
+var fd 
+fd=foe.distance
+var f
+f=foe
+var fs
+fs=foe.state
+var ft
+ft = foe.time
+var fds
+fds=foe.debuffs.string
+var fbs
+fbs=foe.buffs.string
+
+//extras
+var timeoff=0
+var bosscount=0
+var loop=0
+
+var p1kf = false
+var p2kf = false
+var p3kf = false
+var posf = false
+var p1kt = 0
+var p2kt = 0
+var p3kt = 0
+var post = 0
+var count1 = 0
+var count2 = 0
+var pmdelay = 15
+
+?fd>7
+  count1 = 0
+  count2 = 0
+
+?foe = phase1 & foe.hp < 1
+  p1kf = true
+?foe = phase2 & foe.hp < 1
+  p2kf = true
+?foe = phase3 & foe.hp < 1
+  p3kf = true
+?pos.x >= 259 & !posf
+  posf = true
+
+?p1kf & !p2kf
+  p1kt++
+?p2kf & !p3kf
+  p2kt++
+?p3kf & enduse < 1
+  p3kt++
+?posf & !p1kf
+  post++
+
+?loc.loop //restarting variables
+  p1kf = false
+  p2kf = false
+  p3kf = false
+  posf = false
+  p1kt = 0
+  p2kt = 0
+  p3kt = 0
+  post = 0
+  count1 = 0
+  count2 = 0
+  pmdelay = 15
+  bosscount=0
+  loop++
+
+
+//funcs
+//speed
+func dash()
+ ?ai.enabled
+  equipL trisk
+  ?igc(＂bash＂) <= 0
+   equip bash
+  :?igc(＂dash＂) <= 0 
+   equip dash shiny
+   return true
+  return false
+
+//in a future "master" space. just i dk how to make this work here
+
+//tecniques 
+func moon(s1,s2) //Moondialing 
+ ?totaltime%3 = 0
+  equipR @s1@
+  equipL moon
+ :?totaltime%3 = 1
+  equipR @s2@
+  equipL moon
+ :
+  equipR @s1@
+  equipL @s2@
+
+func moonj(w1,w2) //Moonjuggle 
+ ?totaltime%4 = 0
+  equipR moon
+  equipL @w1@
+ :?totaltime%4 = 1
+  equipR @w1@
+  equipL @w2@
+ :?totaltime%4 = 2
+  equipR moon
+  equipL @w2@
+ :
+  equipR @w2@
+  equipL @w1@
+
+func step(smt) //Stutterstep / Smoothcast 
+ ?totaltime%2=0
+  equipL trisk
+  equipR hatchet 
+ :
+  equip @smt@
+
+//activate
+func BladeAt(i) //two screens BFG
+ return screen.i=i & fd<29 & Blade()
+var wait=0
+func Blade()
+ ?igc(＂blade＂)<=0
+  wait++
+  screen.Next()
+  ?wait>18
+   equip blade
+   activate R
+   screen.ResetOffset()
+   wait=0
+  return true
+ return false
+
+func hammer() //heavy hammer
+ return excec(＂heavy_hammer＂,＂False Prophet＂)
+
+func bardiche() //bardiche 
+ return excec(＂bardiche＂,＂Satanic＂)
+
+func mask() //Mask 
+ return excec(＂mask＂,＂mask＂)
+
+func pagan() //poison staff
+ return excec(＂staff_poison＂,＂pagan＂)
+
+func heretic() //fire staff
+ return excec(＂staff_fire＂,＂heretic＂)
+
+func ocultism() //aether staff
+ return excec(＂staff_aether＂,＂Ocultism＂)
+
+func quart(v) //quarterstaff (v = staff tipe)
+ return excec(＂quarterstaff＂,v)
+
+func excec(x,v) //excecute your weapons
+ ?ica() & (igc(x)<=0 | item.right=v
+ ^& item.right.state=2)
+  equip @v@
+  activate R
+  return true
+ return false
+
+//extras
+func barush() //dysangelos first cutscene 
+ ?igc(＂quarterstaff＂) <= 0 & ica()
+  equip quart
+  activate R
+ :?igc(＂dash＂)<=0
+  equip dash shiny
+  equipL trisk
+ :?bardiche()  
+  return
+ :
+  equip bash
+  return true
+ return false
+
+//cosmetics
+var cfc=＂#A9A9A9＂
+>h-3,4,@cfc@,Ω Js Ω
+?time/4%4=0
+  >h-5,1,@cfc@,._.-
+:?time/4%4=1
+  >h-6,1,@cfc@,-._.-
+:?time/4%4=2
+  >h-6,1,@cfc@,.-._-
+:?time/4%4=3
+  >h-5,1,@cfc@,_.-.
+>h-2,-2,@cfc@,ascii
+ /`
+('.
+_)_\_
+asciiend 
+draw.Player()
