@@ -86,7 +86,7 @@ func Cooldowns(x,y,w,h)
   y=y+h
 
 
-//PRINT O' MANYA
+//PRINT O' MANIA
 func PrintMyAscii()
  var mc=＂#A9A9A9＂
  >`0,0,@APC@,Boss: @foe=boss@
@@ -109,7 +109,7 @@ func PrintMyAscii()
  >`0,23,@mc@,pos: x @pos.x@ y @pos.y@ z @pos.z@
  ^ scrn: @screen.i@
  >`0,24,@APC@,☆@foe.level@☆ @foe.id@ 
- ^d: @fd@ c: @foe.count@ dmg: 
+ ^d: @foe.distance@ c: @foe.count@ dmg: 
  ^@foe.damage@ hp: @foe.hp@ z: @foe.z@
  >`45,25,@mc@,@item.GetCooldown(＂staff_fire＂)@
 ?!loc.isQuest & loc.stars > 0
