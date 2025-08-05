@@ -121,8 +121,8 @@
 // Button location parameters
 var buttonanchor = top_left
 var buttondock = top_left
-var buttonx = 55
-var buttony = 6
+var buttonx = 53
+var buttony = 0
 
 var level   = true
 var scene   = false
