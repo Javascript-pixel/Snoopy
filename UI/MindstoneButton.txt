@@ -1,44 +1,3 @@
-//*******************************
-// File Info
-//*******************************
-// Mindstone Button
-// Version: 1.5
-//
-// Designed and verified on
-// SSRPG v3.53.6
-//
-// Authors:
-// Created by TeumessianSven
-// on the Stone Story RPG
-// Discord
-//     
-//
-// Description:
-// ------------
-// Adds a button, similar to
-// other item buttons in-game,
-// that allows a user to open 
-// the mindstone mid-run by
-// tapping the button. 
-//
-// By default the button will 
-// only display on standard
-// levels, won't display
-// during quests, and will 
-// be located directly below
-// the potion location. See
-// Advanced Instructions to 
-// change these settings.
-//
-//
-// Quickstart Instructions:
-// ------------------------
-// Import the Mindstone button
-// with default settings using 
-// the following command:
-//  import UI/MindstoneButton
-//
-//
 // Advanced Instructions:
 // ----------------------
 // Import the Mindstone button
@@ -162,8 +121,8 @@
 // Button location parameters
 var buttonanchor = top_left
 var buttondock = top_left
-var buttonx = 1
-var buttony = 6
+var buttonx = 46
+var buttony = 10
 
 var level   = true
 var scene   = false
