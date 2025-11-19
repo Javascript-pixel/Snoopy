@@ -91,4 +91,4 @@ func FormatText(text)
   for a = 0..String.Size(text)-1
     Character = string.Sub(text, a, 1)
     emptystring += NextShade() + Character + CloseTag
-  return emptystring
+  return emptystring 
