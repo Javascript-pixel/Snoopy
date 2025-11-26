@@ -8,21 +8,21 @@ have fun!!!
 //Global variables
 
 var f = null
-var c = ＂#rainFF＂
+var c = ＂#003A5A＂
 
 
 //scarf
 
 var animframes = ［ascii
-'-._. -
+'-._. 
 asciiend,ascii
--._.- ☺
+-._.- 
 asciiend,ascii
-._.-. O
+._.-. 
 asciiend,ascii
-_.-._ ☺
+_.-._ 
 asciiend,ascii
-,-._. -
+,-._. 
 asciiend］
 
 
@@ -99,23 +99,14 @@ asciiend
 
 >h-2,-2,@c@,@hat@
 
->h-3,4,@c@,Ω @player.name@ Ω
+>h-3,4,@c@,Ω @Js@ Ω
 
 var i = 0
->h-6,1,@f@,@animframes［i］@
-
-
-//set random colors
+>h-6,1,@c@,@animframes［i］@
 
 ?time % 16 = 0
  i++
- f = color.random()
-
-?time % 16 = 8
- f = color.random()
-
 ?i >= animframes.Count()
  i = 0
 
-//and, finish the cosmetic
 draw.Player()
