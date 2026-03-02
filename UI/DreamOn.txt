@@ -1,30 +1,30 @@
 
 var c = ＂#white＂
 var APC = ＂#white＂
-var A1
-var A2
-var A3
-var A4 
-var PC 
-var EC
+var A1 = ＂#white＂
+var A2 = ＂#white＂
+var A3 = ＂#white＂
+var A4 = ＂#white＂
+var PC = ＂#white＂
+var EC = ＂#white＂
 
 ?ai.enabled
- A1 = "#32DA5A"
+ A1 = ＂#32DA5A＂
 ?ai.idle
- A2 = "#32DA5A"
+ A2 = ＂#32DA5A＂
 ?ai.walking
- A3 = "#32DA5A"
-?al.paused
- A4 = "#32DA5A"
+ A3 = ＂#32DA5A＂
+?ai.paused
+ A4 = ＂#32DA5A＂
 
 ?item.potion ! empty
- PC = "#32DA5A"
+ PC = ＂#32DA5A＂
 
 ?Encounter.IsElite
- EC = "#32DA5A"
+ EC = ＂#32DA5A＂
 
 ?foe.level = 0
- APC = "#white"
+ APC = ＂#white＂
 ?foe.level <= 5 & foe.level > 0
  APC = ＂#02E5FF＂
 ?foe.level <= 10 & foe.level > 5
@@ -32,12 +32,12 @@ var EC
 ?foe.level <= 15 & foe.level > 10
  APC = ＂#32DA5A＂
 ?foe.level <= 20 & foe.level > 15
- APC = "#0063FF"
+ APC = ＂#0063FF＂
 ?foe.level <= 25 & foe.level > 20
- APC = "#FF2222"
+ APC = ＂#FF2222＂
 
 ?loc.stars <= 5
- c = "#white"
+ c = ＂#white＂
 ?loc.stars <= 10 & loc.stars > 5
  c = ＂#02E5FF＂
 ?loc.stars <= 15 & loc.stars > 10
@@ -45,9 +45,9 @@ var EC
 ?loc.stars <= 20 & loc.stars > 15
  c = ＂#32DA5A＂
 ?loc.stars <= 25 & loc.stars > 20
- c = "#0063FF"
+ c = ＂#0063FF＂
 ?loc.stars <= 30 & loc.stars > 25
- c = "#FF2222"
+ c = ＂#FF2222＂
 
 //global variables
 var n = 0
@@ -55,7 +55,7 @@ var t = 0
 var y = 0
 var fps = 0
 var dps = ［］
-var cds = ［]
+var cds = ［］
 var oldhp = foe.hp + foe.armor
 var old_t = item.GetTreasureCount()
 var enduse = 0
@@ -64,31 +64,31 @@ var bashcount = 0
 var qcount = 0
 var infC
 var inf 
-var inft = @item.GetCooldown("staff_fire")@
+var inft = item.GetCooldown(＂staff_fire＂)
 var poiC
 var poi
-var poit = @item.GetCooldown("staff_poison")@
+var poit = item.GetCooldown(＂staff_poison＂)
 var BN
 
 ?foe = boss
  BN = foe.id
 :
- BN = "#"
+ BN = ＂#＂
 
 
 ?inft > 1
  inf = time.FormatDigital(inft)
- infC = "#white"
+ infC = ＂#white＂
 :
  inf = φ
- infC = "#FF2222"
+ infC = ＂#FF2222＂
 
 ?poit > 1
  poi = time.FormatDigital(poit)
- poiC = "#white"
+ poiC = ＂#white＂
 :
  poi = ∞
- poiC = "#32DA5A"
+ poiC = ＂#32DA5A＂
 
 
 ?item.GetCooldown(＂quarterstaff＂) > 129
@@ -164,18 +164,18 @@ func PrintMyAscii()
  >`0,0,@APC@,Boss: @BN@
  >`0,1,@mc@,buffs: @foe.buffs.string@
  >`0,2,@mc@,debuffs: @foe.debuffs.string@
- >`0,3,@mc@,hp @hp@ armor @armor@ 
- >`17,3,#FF00FF,@buffs.GetCount(＂smite＂)@♦
+ >`0,3,@mc@,hp @hp@ armor @armor@   
+ >`16,3,#FF00FF,@buffs.GetCount(＂smite＂)@♦   
  >`21,3,(:) @dashcount@ (>>) @bashcount@ ¼ @qcount@
  >`0,4,@mc@,buffs: @buffs.string@
  >`0,5,@mc@,debuffs: @debuffs.string@
- >`0,8,@A1@,ai.enabled
- >`0,9,@A2@,ai.idle
- >`0,10,@A3@,ai.walking
- >`0,11,@A4@,ai.paused
- >`0,12,@EC@,ELITE @encounter.eliteMod@
- >`0,13,@PC@,POTION
- >`0,22,@c@,loc: @loc.id@ ☆@loc.stars@☆ GP @loc.gp@
+ >`0,9,@A1@,ai.enabled
+ >`0,10,@A2@,ai.idle
+ >`0,11,@A3@,ai.walking
+ >`0,12,@A4@,ai.paused
+ >`0,13,@EC@,ELITE @encounter.eliteMod@
+ >`0,14,@PC@,POTION
+ >`0,22,@c@,loc: @loc.id@ ☆@loc.stars@☆ GP @loc.
  >`0,23,@mc@,pos: x @pos.x@ y @pos.y@ z @pos.z@ scrn: @screen.i@
  >`0,24,@APC@,☆@foe.level@☆ @foe.id@ 
  ^d: @foe.distance@ c: @foe.count@ dmg: 
