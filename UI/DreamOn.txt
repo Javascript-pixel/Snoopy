@@ -1,59 +1,130 @@
-/*
-a few things that i like to see in my gameplay
-created by Js
-*/
 
-//colors
-var c=＂#A9A9A9＂
-var APC=＂#A9A9A9＂
+var c = ＂#white＂
+var APC = ＂#white＂
+var A1
+var A2
+var A3
+var A4 
+var PC 
+var EC
 
-//difficult colors
-?foe.level<=5&foe.level>0
- APC=＂#02BDDE＂
-?foe.level<=10&foe.level>5
- APC=＂#B5B500＂
-?foe.level<=15&foe.level>10
- APC=＂#326331＂
-?loc.stars<=10&loc.stars>5
- c=＂#02BDDE＂
-?loc.stars<=15&loc.stars>10
- c=＂#B5B500＂
-?loc.stars<=20&loc.stars>15
- c=＂#326331＂
+?ai.enabled
+ A1 = "#32DA5A"
+?ai.idle
+ A2 = "#32DA5A"
+?ai.walking
+ A3 = "#32DA5A"
+?al.paused
+ A4 = "#32DA5A"
+
+?item.potion ! empty
+ PC = "#32DA5A"
+
+?Encounter.IsElite
+ EC = "#32DA5A"
+
+?foe.level = 0
+ APC = "#white"
+?foe.level <= 5 & foe.level > 0
+ APC = ＂#02E5FF＂
+?foe.level <= 10 & foe.level > 5
+ APC = ＂#FFFF62＂
+?foe.level <= 15 & foe.level > 10
+ APC = ＂#32DA5A＂
+?foe.level <= 20 & foe.level > 15
+ APC = "#0063FF"
+?foe.level <= 25 & foe.level > 20
+ APC = "#FF2222"
+
+?loc.stars <= 5
+ c = "#white"
+?loc.stars <= 10 & loc.stars > 5
+ c = ＂#02E5FF＂
+?loc.stars <= 15 & loc.stars > 10
+ c = ＂#FFFF62＂
+?loc.stars <= 20 & loc.stars > 15
+ c = ＂#32DA5A＂
+?loc.stars <= 25 & loc.stars > 20
+ c = "#0063FF"
+?loc.stars <= 30 & loc.stars > 25
+ c = "#FF2222"
 
 //global variables
-var n=  0
-var t=  0
-var y=  0
-var fps=0
-var dps=［］
-var cds=［]
-var oldhp=foe.hp+foe.armor
-var old_t= item.GetTreasureCount()
+var n = 0
+var t = 0
+var y = 0
+var fps = 0
+var dps = ［］
+var cds = ［]
+var oldhp = foe.hp + foe.armor
+var old_t = item.GetTreasureCount()
 var enduse = 0
+var dashcount = 0
+var bashcount = 0
+var qcount = 0
+var infC
+var inf 
+var inft = @item.GetCooldown("staff_fire")@
+var poiC
+var poi
+var poit = @item.GetCooldown("staff_poison")@
+var BN
+
+?foe = boss
+ BN = foe.id
+:
+ BN = "#"
+
+
+?inft > 1
+ inf = time.FormatDigital(inft)
+ infC = "#white"
+:
+ inf = φ
+ infC = "#FF2222"
+
+?poit > 1
+ poi = time.FormatDigital(poit)
+ poiC = "#white"
+:
+ poi = ∞
+ poiC = "#32DA5A"
+
+
+?item.GetCooldown(＂quarterstaff＂) > 129
+ qcount++
+
+?item.GetCooldown(＂bash＂) > 269
+ bashcount++
+
+?item.GetCooldown(＂dash＂) > 44
+ dashcount++
+
 
 //DPS tracker
-?foe.hp+foe.armor<oldhp
+?foe.hp + foe.armor < oldhp
   dps.Add((foe.hp + foe.armor)-oldhp)
 :
   dps.Add(0)
-oldhp=foe.hp+foe.armor
-?dps.Count()>30
+oldhp = foe.hp + foe.armor
+?dps.Count() > 30
   dps.RemoveAt(0)
 ?!loc.begin
   for value : dps
-    n=n-value
+    n = n - value
   >`0,6,dps: @n@
-n=0
+n = 0
+
 
 //FPS tracker (limited to 30)
->`11,6,fps:@fps@
-?time.second>t
-  fps=y
-  y=1
+>`11,6,fps: @fps@
+?time.second > t
+  fps = y
+  y = 1
 :
   y++
-t=time.second
+t = time.second
+
 
 //Post treasure tracker 
 ?old_t ! item.GetTreasureCount()
@@ -61,6 +132,7 @@ t=time.second
 ?loc.loop
   old_t = item.GetTreasureCount()
   enduse = 0
+
 
 //Weapon cooldown 
 func Cooldowns(x,y,w,h)
@@ -74,44 +146,43 @@ func Cooldowns(x,y,w,h)
  var cdc
  var t
  for i:cds
-  t=item.GetCooldown(i)
-  ?t>0
-   cdc=#565656
-   cd=time.FormatDigital(t)
+  t = item.GetCooldown(i)
+  ?t > 0
+   cdc = #565656
+   cd = time.FormatDigital(t)
   :
-   cdc=#A9A9A9
-   cd=string.ToUpper(string.Sub(i,0,4))
+   cdc = #white
+   cd = string.ToUpper(string.Sub(i,0,4))
   >`@x@,@y@,@cdc@,@cd@
-  x=x+w
-  y=y+h
+  x = x + w
+  y = y + h
 
 
-//PRINT O' MANIA
+
 func PrintMyAscii()
- var mc=＂#A9A9A9＂
- >`0,0,@APC@,Boss: @foe=boss@
+ var mc =＂#white＂
+ >`0,0,@APC@,Boss: @BN@
  >`0,1,@mc@,buffs: @foe.buffs.string@
  >`0,2,@mc@,debuffs: @foe.debuffs.string@
  >`0,3,@mc@,hp @hp@ armor @armor@ 
- ^@buffs.GetCount(＂smite＂)@♦
+ >`17,3,#FF00FF,@buffs.GetCount(＂smite＂)@♦
+ >`21,3,(:) @dashcount@ (>>) @bashcount@ ¼ @qcount@
  >`0,4,@mc@,buffs: @buffs.string@
  >`0,5,@mc@,debuffs: @debuffs.string@
- >`0,8,@mc@,ai.enabled: @ai.enabled@
- >`0,9,@mc@,ai.idle: @ai.idle@
- >`0,10,@mc@,ai.walking: @ai.walking@
- >`0,11,@mc@,ai.paused: @ai.paused@
- >`0,12,@mc@,Elite: @encounter.isElite@ 
- ^@encounter.eliteMod@
- >`0,13,@mc@,potion: @item.potion!empty@
- >`0,16,LB time: @totaltime@ @enduse@ 
- >`0,22,@c@,loc: @loc.id@ *@loc.stars@* 
- ^GP @loc.gp@
- >`0,23,@mc@,pos: x @pos.x@ y @pos.y@ z @pos.z@
- ^ scrn: @screen.i@
+ >`0,8,@A1@,ai.enabled
+ >`0,9,@A2@,ai.idle
+ >`0,10,@A3@,ai.walking
+ >`0,11,@A4@,ai.paused
+ >`0,12,@EC@,ELITE @encounter.eliteMod@
+ >`0,13,@PC@,POTION
+ >`0,22,@c@,loc: @loc.id@ ☆@loc.stars@☆ GP @loc.gp@
+ >`0,23,@mc@,pos: x @pos.x@ y @pos.y@ z @pos.z@ scrn: @screen.i@
  >`0,24,@APC@,☆@foe.level@☆ @foe.id@ 
  ^d: @foe.distance@ c: @foe.count@ dmg: 
  ^@foe.damage@ hp: @foe.hp@ z: @foe.z@
- >`45,25,@mc@,@item.GetCooldown(＂staff_fire＂)@
+ >`45,25,@infC@,@inf@
+ >`50,25,@poiC@,@poi@
+
 ?!loc.isQuest & loc.stars > 0
 ^& loc ! ＂shop＂
  PrintMyAscii()
