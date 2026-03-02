@@ -115,6 +115,10 @@ var BN
 ?item.GetCooldown(＂dash＂) > 44
  dashcount++
 
+?loc.loop
+ var dashcount = 0
+ var bashcount = 0
+ var qcount = 0
 
 //DPS tracker
 ?foe.hp + foe.armor < oldhp
@@ -181,7 +185,7 @@ func PrintMyAscii()
  >`0,2,@mc@,debuffs: @foe.debuffs.string@
  >`0,3,@mc@,hp @hp@ armor @armor@   
  >`16,3,#FF00FF,@buffs.GetCount(＂smite＂)@♦   
- >`21,3,(:) @dashcount@ (>>) @bashcount@ ¼ @qcount@
+ >`21,3,(:) @dashcount@ (>> @bashcount@ ¼ @qcount@
  >`0,4,@mc@,buffs: @buffs.string@
  >`0,5,@mc@,debuffs: @debuffs.string@
  >`0,9,@A1@,ai.enabled
