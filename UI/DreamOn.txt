@@ -10,18 +10,33 @@ var EC = ＂#white＂
 
 ?ai.enabled
  A1 = ＂#32DA5A＂
+:
+ A1 = "#white"
+
 ?ai.idle
  A2 = ＂#32DA5A＂
+:
+ A2 = "#white"
+
 ?ai.walking
  A3 = ＂#32DA5A＂
+:
+ A3 = "#white"
+
 ?ai.paused
  A4 = ＂#32DA5A＂
+:
+ A4 = "#white"
 
 ?item.potion ! empty
  PC = ＂#32DA5A＂
+:
+ PC = "#white"
 
 ?Encounter.IsElite
  EC = ＂#32DA5A＂
+:
+ EC = "#white"
 
 ?foe.level = 0
  APC = ＂#white＂
