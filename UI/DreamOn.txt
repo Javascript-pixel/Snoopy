@@ -7,7 +7,6 @@ var A3 = ＂#white＂
 var A4 = ＂#white＂
 var PC = ＂#white＂
 var EC = ＂#white＂
-var dpsC = "#white"
 
 ?ai.enabled
  A1 = ＂#32DA5A＂
@@ -136,6 +135,7 @@ var BN
 
 //DPS tracker
 func dpsTracker()
+ var dpsC
  ?dps <= 100
   dpsC = "#white"
  ?dps <= 1000 & dps > 100
@@ -165,13 +165,13 @@ func dpsTracker()
    ?i > 4
     hps++
 
-  >`0,6,@dpsC@,dps: @dps@ hps: @hps@
+  >`0,6,@dpsC@,dps: @dps@ hps: @hps@/30
   dps = 0
   hps = 0
 
 
 //FPS tracker (limited to 30)
->`11,6,fps: @fps@
+>`22,6,fps: @fps@
 ?time.second > t
   fps = y
   y = 1
