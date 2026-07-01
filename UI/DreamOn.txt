@@ -1,4 +1,3 @@
-
 var c = ＂#white＂
 var APC = ＂#white＂
 var A1 = ＂#white＂
@@ -74,7 +73,7 @@ var cds = ［］
 var oldHp = 0
 var ttHp = 0
 var dps = 0
-var dmgs =［］
+var dmgs = ［］
 var hps = 0
 ttHp = foe.hp + foe.armor
 
@@ -93,22 +92,17 @@ var poiC
 var poi
 var poit = item.GetCooldown(＂staff_poison＂)
 
-var BN
-
-?foe = boss
- BN = foe.id
-:
- BN = ＂#＂
+var BN 
 
 
-?inft > 1
+?inft > 0
  inf = time.FormatDigital(inft)
  infC = ＂#white＂
 :
  inf = φ
  infC = ＂#FF2222＂
 
-?poit > 1
+?poit > 0
  poi = time.FormatDigital(poit)
  poiC = ＂#white＂
 :
@@ -127,11 +121,16 @@ var BN
 ?item.GetCooldown(＂dash＂) > 44
  dashcount++
 
-?loc.loop
- var dashcount = 0
- var bashcount = 0
- var qcount = 0
- var infcount = 0
+?foe = boss
+ BN = foe.id
+:
+ BN = ＂#＂
+
+?loc.loop | loc.begin
+ dashcount = 0
+ bashcount = 0
+ qcount = 0
+ infcount = 0
 
 //DPS tracker
 func dpsTracker()
