@@ -4,7 +4,7 @@ func CanUse(x)
  return item.GetCooldown(x) <= 0
  ^& item.CanActivate()
 
-func Equip(L,R)
+func E(L,R)
  equipR @R@
  equipL @L@
 
