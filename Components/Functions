@@ -8,6 +8,8 @@ func Equip(L,R)
  equipR @R@
  equipL @L@
 
+
+
 //ACTIVATE
 //ESPECIAL
 
@@ -34,6 +36,7 @@ func Skeleton()
    activate R
 
 
+
 //EXECUTE
 
 func Bard()
@@ -53,6 +56,7 @@ func execute_twohanded(y,v)
  return false
 
 
+
 //STAFFS
 
 func Eternity()
@@ -62,14 +66,12 @@ func Eternity()
  :
   >o-11,-2,#rainFF,Out Of Armor For Eternity
 
-
 func Infernal()
  ?armor >= 6
   return InstantTwoHanded(＂staff_fire＂,
   ^＂Heretic Staff＂)
  :
   >o-11,-2,#rainFF,Out Of Armor For Infernal
-
 
 func Graspp()
  ?armor >= 2
@@ -78,14 +80,12 @@ func Graspp()
  :
   >o-10,-2,#rainFF,Out Of Armor For Graspp
 
-
 func Prevention()
  ?armor >= 4
   return InstantTwoHanded(＂staff_vigor＂,
   ^＂Prevention Staff＂)
  :
   >o-12,-2,#rainFF,Out Of Armor For Prevention
-
 
 func Berserk()
  ?armor >= 8
@@ -94,7 +94,6 @@ func Berserk()
  :
   >o-11,-2,#rainFF,Out Of Armor For Berserk
 
-
 func Acrobatic()
  ?armor >= 3
   return InstantTwoHanded(＂staff_stone＂,
@@ -102,15 +101,12 @@ func Acrobatic()
  :
   >o-11,-2,#rainFF,Out Of Armor For Acrobatic
 
-
 func Quarter(enchant)
  return InstantTwoHanded(＂quarterstaff＂,
  ^＂quarterstaff＂ + enchant)
 
-
 func Shovel()
  return InstantTwoHanded(＂shovel＂,＂shovel＂)
-
 
 func InstantTwoHanded(y,v)
  ?(CanUse(y))
@@ -118,6 +114,7 @@ func InstantTwoHanded(y,v)
   activate R
   return true
  return false
+
 
 
 //WANDS
@@ -133,13 +130,11 @@ func Ftalis(m)
  return InstantOne(m,＂fire_talisman＂,
  ^＂A Fine Day To Die＂)
 
-
 func Frost(m)
  ?armor >= 3
   return InstantOne(m,＂wand_ice＂,＂Frost Wand＂)
  :
   >o-10,-2,#rainFF,Out Of Armor For Frost
-
 
 func Explosive(m)
  ?armor >= 4
@@ -148,7 +143,6 @@ func Explosive(m)
  :
   >o-12,-2,#rainFF,Out Of Armor For Explosive
 
-
 func Calamity(m)
  ?armor >= 14
   return InstantOne(m,＂wand_aether＂,
@@ -156,13 +150,11 @@ func Calamity(m)
  :
   >o-12,-2,#rainFF,Out Of Armor For Calamity
 
-
 func Reset(m)
  ?armor >= 1
   return InstantOne(m,＂wand_vigor＂,＂Reset Wand＂)
  :
   >o-10,-2,#rainFF,Out Of Armor For Reset
-
 
 func Plague(m)
  ?armor >= 6
@@ -171,14 +163,12 @@ func Plague(m)
  :
   >o-10,-2,#rainFF,Out Of Armor For Plague
 
-
 func Gravity(m)
  ?armor >= 0
   return InstantOne(m,＂wand_stone＂,
   ^＂Gravity Wand＂)
  :
   >o-11,-2,#rainFF,Out Of Armor For Gravity
-
 
 func InstantOne(h,y,v)
  ?(CanUse(y))
